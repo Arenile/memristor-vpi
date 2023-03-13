@@ -22,27 +22,26 @@ static int memristor_calltf(PLI_BYTE8* user_data) {
 
     vpiHandle callh = vpi_handle(vpiSysTfCall, 0);
     vpiHandle argv = vpi_iterate(vpiArgument, callh);
-    vpiHandle item;
-    vpiHandle item1;
-    vpiHandle out;
+    vpiHandle rInc;
+    vpiHandle rDec;
 
-    item = vpi_scan(argv);
-    item1 = vpi_scan(argv);
-    out = vpi_scan(argv);
+    rInc = vpi_scan(argv);
+    rDec = vpi_scan(argv);
     struct t_vpi_value argval;
     int value;
     int value1;
     struct t_vpi_value out_value;
     out_value.format = vpiIntVal;
 
-    out_value.value.integer = 10;
-
     argval.format = vpiIntVal;
-    vpi_get_value(item, &argval);
+    vpi_get_value(rInc, &argval);
     value = argval.value.integer;
-    vpi_get_value(item1, &argval);
+    vpi_get_value(rDec, &argval);
     value1 = argval.value.integer;
-    vpi_put_value(out, &out_value, NULL, vpiNoDelay);
+
+    out_value.value.integer = value1 + 1;
+
+    vpi_put_value(rDec, &out_value, NULL, vpiNoDelay);
 
     vpi_printf("HELLO VERILOG!\n");
     vpi_printf("RECEIVED = %i\n", value);

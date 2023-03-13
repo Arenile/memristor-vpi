@@ -1,27 +1,28 @@
-#! /home/ivris/oss-cad-suite/bin/vvp
-:ivl_version "12.0 (devel)" "(s20150603-1734-g580d79eae)";
+#! /usr/bin/vvp
+:ivl_version "11.0 (stable)" "(v11_0)";
 :ivl_delay_selection "TYPICAL";
 :vpi_time_precision + 0;
-:vpi_module "/home/ivris/oss-cad-suite/lib/ivl/system.vpi";
-:vpi_module "/home/ivris/oss-cad-suite/lib/ivl/vhdl_sys.vpi";
-:vpi_module "/home/ivris/oss-cad-suite/lib/ivl/vhdl_textio.vpi";
-:vpi_module "/home/ivris/oss-cad-suite/lib/ivl/v2005_math.vpi";
-:vpi_module "/home/ivris/oss-cad-suite/lib/ivl/va_math.vpi";
-S_0x555555dd1dc0 .scope module, "memristor" "memristor" 2 1;
+:vpi_module "/usr/lib/ivl/system.vpi";
+:vpi_module "/usr/lib/ivl/vhdl_sys.vpi";
+:vpi_module "/usr/lib/ivl/vhdl_textio.vpi";
+:vpi_module "/usr/lib/ivl/v2005_math.vpi";
+:vpi_module "/usr/lib/ivl/va_math.vpi";
+S_0x562183d4c4c0 .scope module, "memristor" "memristor" 2 2;
  .timescale 0 0;
-v0x555555dd4270_0 .var "a", 7 0;
-v0x555555dd4030_0 .var "b", 7 0;
-v0x555555e18130_0 .var "c", 7 0;
-    .scope S_0x555555dd1dc0;
+    .port_info 0 /INOUT 1 "rInc";
+    .port_info 1 /INOUT 1 "rDec";
+o0x7f89864c0018 .functor BUFZ 1, C4<z>; HiZ drive
+v0x562183d4c650_0 .net "rDec", 0 0, o0x7f89864c0018;  0 drivers
+o0x7f89864c0048 .functor BUFZ 1, C4<z>; HiZ drive
+v0x562183d4d110_0 .net "rInc", 0 0, o0x7f89864c0048;  0 drivers
+E_0x562183d835e0 .event edge, v0x562183d4d110_0, v0x562183d4c650_0;
+    .scope S_0x562183d4c4c0;
 T_0 ;
-    %pushi/vec4 5, 0, 8;
-    %store/vec4 v0x555555dd4270_0, 0, 8;
-    %pushi/vec4 2, 0, 8;
-    %store/vec4 v0x555555dd4030_0, 0, 8;
-    %vpi_call 2 9 "$memristor", v0x555555dd4270_0, v0x555555dd4030_0, v0x555555e18130_0 {0 0 0};
-    %vpi_call 2 10 "$display", v0x555555e18130_0 {0 0 0};
-    %end;
-    .thread T_0;
+    %wait E_0x562183d835e0;
+    %vpi_call 2 5 "$memristor", v0x562183d4d110_0, v0x562183d4c650_0 {0 0 0};
+    %vpi_call 2 6 "$display", "rDec = %d", v0x562183d4c650_0 {0 0 0};
+    %jmp T_0;
+    .thread T_0, $push;
 # The file index is used to find the file name in the following table.
 :file_names 3;
     "N/A";

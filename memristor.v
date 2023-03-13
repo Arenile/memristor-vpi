@@ -1,12 +1,9 @@
-module memristor;
-    reg[7:0] a;
-    reg[7:0] b;
-    reg[7:0] c;
+(*blackbox*)
+module memristor(inout rInc, inout rDec);
 
-    initial begin
-        a = 5;
-        b = 2;
-        $memristor(a, b, c);
-        $display(c);
+    always @(*) begin
+        $memristor(rInc, rDec);
+        $display("rDec = %d", rDec);
     end
+
 endmodule
