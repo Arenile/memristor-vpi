@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 module memristor;
     reg[7:0] a [3:0];
     reg[7:0] b;
@@ -10,5 +11,14 @@ module memristor;
         b = 2;
         $memristor(1, 5);
         $display(c);
+=======
+(*blackbox*)
+module memristor(inout rInc, inout rDec);
+
+    always @(*) begin
+        $memristor(rInc, rDec);
+        $display("rDec = %d", rDec);
+>>>>>>> 6f9b27f654df014a55eee110c5e10f826b0de222
     end
+
 endmodule
