@@ -73,16 +73,12 @@ int main() {
     double testValDec = 0;
     double testValInc = 3;
 
+    double cur_state = 0.0;
+
     double dt = 0.1;
 
-    double prev_state = 3.0;
-
-    double new_val = linear(testValDec, testValInc, dt, prev_state);
-    double newer_val = linear(0, 3, dt, new_val);
-
-    printf("Prev state = %f\n", prev_state);
-
-    printf("new_state = %f\n", new_val);
-
-    printf("Even newer state = %f\n", newer_val);
+    for (int i = 0; i < 100; i++) {
+        cur_state =  linear(testValDec, testValInc, dt, cur_state);
+        printf("State = %f\n", cur_state);
+    }
 }

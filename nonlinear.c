@@ -15,7 +15,7 @@
 #define THRESHOLD 1E-5
 
 // WINDOW FUNCTION CONST
-#define P       1
+#define P       2
 
 // OTHER USEFUL CONSTANTS
 #define K       (UV * R_ON)/(D*D) 
@@ -39,15 +39,16 @@ double nonlinear(double vDec, double vInc, double dt, double prev_state) {
 
     double new_state = prev_state;
 
-    printf("i = %f\n", i);
-
     // Need window function for nonlinear behavior
 
-    double window = (1 - pow((2*prev_state - 1), (2*P)));
-
-    printf("WINDOW = %f\n", window);
+    double window = (1 - pow((2*(prev_state+0.00001) - 1), (2*P)));
 
     double change = K*(i*dt)*window;
+
+    // printf("change = %f\n", change);
+    // printf("i = %f\n", i);
+    // printf("M = %f\n", M);
+    // printf("window = %f\n", window);
 
     if (fabs(i) < THRESHOLD) {
         printf("NOT CHANGED\n");
@@ -63,8 +64,6 @@ double nonlinear(double vDec, double vInc, double dt, double prev_state) {
             M = R_OFF;
         }
 
-        printf("M = %f\n", M);
-
         new_state = (M - R_ON) / (R_OFF - R_ON);
         return new_state;
     }
@@ -78,8 +77,6 @@ double nonlinear(double vDec, double vInc, double dt, double prev_state) {
             M = R_OFF;
         }
 
-        printf("M = %f\n", M);
-
         new_state = (M - R_ON) / (R_OFF - R_ON);
         return new_state;
     }
@@ -90,16 +87,12 @@ int main() {
     double testValDec = 0;
     double testValInc = 3;
 
-    double dt = 3.0;
+    double cur_state = 0.0;
 
-    double prev_state = 0.5;
+    double dt = 0.1;
 
-    double new_val = nonlinear(testValDec, testValInc, dt, prev_state);
-    double newer_val = nonlinear(0, 3, dt, new_val);
-
-    printf("Prev state = %f\n", prev_state);
-
-    printf("new_state = %f\n", new_val);
-
-    printf("Even newer state = %f\n", newer_val);
+    for (int i = 0; i < 100; i++) {
+        cur_state = nonlinear(testValDec, testValInc, dt, cur_state);
+        printf("State = %f\n", cur_state);
+    }
 }
