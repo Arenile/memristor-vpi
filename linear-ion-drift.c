@@ -14,14 +14,11 @@
 
 #define THRESHOLD 1E-5
 
-// WINDOW FUNCTION CONST
-#define P       1
-
 // OTHER USEFUL CONSTANTS
 #define K       (UV * R_ON)/(D*D) 
 
 
-double nonlinear(double vDec, double vInc, double dt, double prev_state) {
+double linear(double vDec, double vInc, double dt, double prev_state) {
 
     double vIn = vInc - vDec;
 
@@ -29,25 +26,11 @@ double nonlinear(double vDec, double vInc, double dt, double prev_state) {
 
     double i = vIn / M;
 
-    // Window function should go here but instead...
-
-    // if i < * THRESHOLD *
-    // then not hight enough current to change M
-    // else
-    // M should change based on how high i is and
-    // some other constants 
-
     double new_state = prev_state;
 
     printf("i = %f\n", i);
 
-    // Need window function for nonlinear behavior
-
-    double window = (1 - pow((2*prev_state - 1), (2*P)));
-
-    printf("WINDOW = %f\n", window);
-
-    double change = K*(i*dt)*window;
+    double change = K*(i*dt);
 
     if (fabs(i) < THRESHOLD) {
         printf("NOT CHANGED\n");
@@ -90,12 +73,12 @@ int main() {
     double testValDec = 0;
     double testValInc = 3;
 
-    double dt = 3.0;
+    double dt = 0.1;
 
-    double prev_state = 0.5;
+    double prev_state = 3.0;
 
-    double new_val = nonlinear(testValDec, testValInc, dt, prev_state);
-    double newer_val = nonlinear(0, 3, dt, new_val);
+    double new_val = linear(testValDec, testValInc, dt, prev_state);
+    double newer_val = linear(0, 3, dt, new_val);
 
     printf("Prev state = %f\n", prev_state);
 
