@@ -61,31 +61,33 @@ static int memristor_calltf(PLI_BYTE8* user_data) {
     argc_vpi = vpi_scan(argv);
     struct t_vpi_value argval;
     PLI_INT32 argc;
-    //struct t_vpi_value out_value;
-    //out_value.format = vpiIntVal;
+    struct t_vpi_value out_value;
+    out_value.format = vpiIntVal;
 
+    vpiHandle item1;
+    vpiHandle out;
     //out_value.value.integer = 10;
 
     argval.format = vpiIntVal;
     vpi_get_value(argc_vpi, &argval);
     argc = argval.value.integer;
 
+    // for (size_t i = 0; i < argc; i++) {
+    //     vpiHandle arg_vpi = vpi_scan(argv);
+    //     vpi_get_value(arg_vpi, &argval);
+    //     args[i] = argval.value.integer;
+
+    //     printf("%d", args[i]);
+    // }
+    // printf("\n");
+
+    int value = argval.value.misc;
+    argval.format = vpiIntVal;
+    vpi_get_value(item1, &argval);
+    int value1 = argval.value.integer;
+    vpi_put_value(out, &out_value, NULL, vpiNoDelay);
+
     out_value.value.integer = nonlinear(value, value1);
-
-    for (size_t i = 0; i < argc; i++) {
-        vpiHandle arg_vpi = vpi_scan(argv);
-        vpi_get_value(arg_vpi, &argval);
-        args[i] = argval.value.integer;
-
-        printf("%d", args[i]);
-    }
-    printf("\n");
-
-    // value = argval.value.misc;
-    // argval.format = vpiIntVal;
-    // vpi_get_value(item1, &argval);
-    // value1 = argval.value.integer;
-    // vpi_put_value(out, &out_value, NULL, vpiNoDelay);
 
     vpi_printf("HELLO VERILOG!\n");
     vpi_printf("RECEIVED = %i\n", argc);
