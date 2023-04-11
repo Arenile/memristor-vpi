@@ -7,20 +7,20 @@
 :vpi_module "/usr/lib/ivl/vhdl_textio.vpi";
 :vpi_module "/usr/lib/ivl/v2005_math.vpi";
 :vpi_module "/usr/lib/ivl/va_math.vpi";
-S_0x562183d4c4c0 .scope module, "memristor" "memristor" 2 2;
+S_0x5652638874c0 .scope module, "memristor" "memristor" 2 2;
  .timescale 0 0;
     .port_info 0 /INOUT 1 "rInc";
     .port_info 1 /INOUT 1 "rDec";
-o0x7f89864c0018 .functor BUFZ 1, C4<z>; HiZ drive
-v0x562183d4c650_0 .net "rDec", 0 0, o0x7f89864c0018;  0 drivers
-o0x7f89864c0048 .functor BUFZ 1, C4<z>; HiZ drive
-v0x562183d4d110_0 .net "rInc", 0 0, o0x7f89864c0048;  0 drivers
-E_0x562183d835e0 .event edge, v0x562183d4d110_0, v0x562183d4c650_0;
-    .scope S_0x562183d4c4c0;
+o0x7f2d88300018 .functor BUFZ 1, C4<z>; HiZ drive
+v0x565263887650_0 .net "rDec", 0 0, o0x7f2d88300018;  0 drivers
+o0x7f2d88300048 .functor BUFZ 1, C4<z>; HiZ drive
+v0x565263888110_0 .net "rInc", 0 0, o0x7f2d88300048;  0 drivers
+E_0x5652638be5e0 .event edge, v0x565263888110_0, v0x565263887650_0;
+    .scope S_0x5652638874c0;
 T_0 ;
-    %wait E_0x562183d835e0;
-    %vpi_call 2 5 "$memristor", v0x562183d4d110_0, v0x562183d4c650_0 {0 0 0};
-    %vpi_call 2 6 "$display", "rDec = %d", v0x562183d4c650_0 {0 0 0};
+    %wait E_0x5652638be5e0;
+    %vpi_call 2 5 "$memristor", v0x565263888110_0, v0x565263887650_0 {0 0 0};
+    %vpi_call 2 6 "$display", "rDec = %d", v0x565263887650_0 {0 0 0};
     %jmp T_0;
     .thread T_0, $push;
 # The file index is used to find the file name in the following table.
