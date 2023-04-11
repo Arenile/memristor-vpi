@@ -2,6 +2,38 @@
 :ivl_version "11.0 (stable)" "(v11_0)";
 :ivl_delay_selection "TYPICAL";
 :vpi_time_precision + 0;
+<<<<<<< HEAD
+:vpi_module "/home/ivris/oss-cad-suite/lib/ivl/system.vpi";
+:vpi_module "/home/ivris/oss-cad-suite/lib/ivl/vhdl_sys.vpi";
+:vpi_module "/home/ivris/oss-cad-suite/lib/ivl/vhdl_textio.vpi";
+:vpi_module "/home/ivris/oss-cad-suite/lib/ivl/v2005_math.vpi";
+:vpi_module "/home/ivris/oss-cad-suite/lib/ivl/va_math.vpi";
+S_0x555557505d90 .scope module, "memristor" "memristor" 2 1;
+ .timescale 0 0;
+v0x555557508270 .array "a", 0 3, 7 0;
+v0x555557508030_0 .var "b", 7 0;
+v0x55555754cce0_0 .var "c", 7 0;
+    .scope S_0x555557505d90;
+T_0 ;
+    %pushi/vec4 8, 0, 8;
+    %ix/load 4, 0, 0;
+    %flag_set/imm 4, 0;
+    %store/vec4a v0x555557508270, 4, 0;
+    %pushi/vec4 1, 0, 8;
+    %ix/load 4, 1, 0;
+    %flag_set/imm 4, 0;
+    %store/vec4a v0x555557508270, 4, 0;
+    %pushi/vec4 0, 0, 8;
+    %ix/load 4, 2, 0;
+    %flag_set/imm 4, 0;
+    %store/vec4a v0x555557508270, 4, 0;
+    %pushi/vec4 2, 0, 8;
+    %store/vec4 v0x555557508030_0, 0, 8;
+    %vpi_call 2 11 "$memristor", 32'sb00000000000000000000000000000001, 32'sb00000000000000000000000000000101 {0 0 0};
+    %vpi_call 2 12 "$display", v0x55555754cce0_0 {0 0 0};
+    %end;
+    .thread T_0;
+=======
 :vpi_module "/usr/lib/ivl/system.vpi";
 :vpi_module "/usr/lib/ivl/vhdl_sys.vpi";
 :vpi_module "/usr/lib/ivl/vhdl_textio.vpi";
@@ -23,6 +55,7 @@ T_0 ;
     %vpi_call 2 6 "$display", "rDec = %d", v0x565263887650_0 {0 0 0};
     %jmp T_0;
     .thread T_0, $push;
+>>>>>>> 6f9b27f654df014a55eee110c5e10f826b0de222
 # The file index is used to find the file name in the following table.
 :file_names 3;
     "N/A";
