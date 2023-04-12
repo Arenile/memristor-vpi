@@ -15,7 +15,7 @@
 #define THRESHOLD 1E-5
 
 // WINDOW FUNCTION CONST
-#define P       2
+#define P       5
 
 // OTHER USEFUL CONSTANTS
 #define K       (UV * R_ON)/(D*D) 
@@ -29,7 +29,7 @@ double nonlinear(double vDec, double vInc, double dt, double prev_state) {
     double new_state = prev_state;
 
     // Need window functin for nonlinear behavior
-    double window = (1 - pow((2*(prev_state+0.00001) - 1), (2*P)));
+    double window = (1 - pow((2*(prev_state+0.00000001) - 1), (2*P)));
     double change = K*(i*dt)*window;
 
     if (fabs(i) < THRESHOLD) {
@@ -70,10 +70,20 @@ int main() {
 
     double cur_state = 0.0;
 
-    double dt = 0.1;
+    double dt = 0.01;
 
-    for (int i = 0; i < 100; i++) {
+    FILE *fileptr;
+
+    fileptr = fopen("NonlinearData.csv", "w+");
+
+    fprintf(fileptr, "Step, State\n");
+    fprintf(fileptr, "%d, %f\n", 0, cur_state);
+
+    for (int i = 1; i <= 1000; i++) {
         cur_state = nonlinear(testValDec, testValInc, dt, cur_state);
         printf("State = %f\n", cur_state);
+        fprintf(fileptr, "%d, %f\n", i, cur_state);
     }
+
+    fclose(fileptr);
 }
