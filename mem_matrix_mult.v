@@ -14,7 +14,10 @@ module mem_matrix;
          b = 3;
          c = 8;
 
-         $crossbar(3, a, b, c);
+         $crossbar(16, a, b, c, 6,
+                   1, 4, 3, 7,
+                   2, 6, 7, 3,
+                   4, 5, 5, 1);
     end
 
 endmodule

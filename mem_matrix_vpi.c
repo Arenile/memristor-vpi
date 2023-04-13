@@ -24,6 +24,8 @@ static int memristor_calltf(PLI_BYTE8* user_data);
 #define B       (D * D) / UV
 #define K       R_ON / B
 
+#define MATRIX_SIZE     4
+
 /* Here we can make calls upon compiling in the verilog
 */
 static int memristor_compiletf(PLI_BYTE8* user_data) {
@@ -66,6 +68,20 @@ static int memristor_calltf(PLI_BYTE8* user_data) {
         printf("new arg = %d\n", args[i]);
         //free(argHandlePtr);
     }
+
+    int* output = malloc(sizeof(int) * MATRIX_SIZE*MATRIX_SIZE);
+
+    reconfig_crossbar(MATRIX_SIZE, args, args, output);
+
+    printf("OUTPUT\n\n");
+    for (int i = 0; i < MATRIX_SIZE; i++) {
+        for (int j = 0; j < MATRIX_SIZE; j++) {
+            printf("%d ", output[i*MATRIX_SIZE +j]);
+        }
+        printf("\n");
+    }
+
+    free(output);
 
     // vpi_get_value(item1, &argval);
     // value1 = argval.value.integer;

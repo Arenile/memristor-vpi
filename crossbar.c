@@ -1,126 +1,125 @@
-#include <stdio.h>
-#include <stdlib.h>
+#include "crossbar.h"
 
-struct Matrix4_4 {
-    char a00; char a01; char a02; char a03;
-    char a10; char a11; char a12; char a13;
-    char a20; char a21; char a22; char a23;
-    char a30; char a31; char a32; char a33;
-} typedef Matrix4_4_t, *pMatrix4_4;
+// struct Matrix4_4 {
+//     char a00; char a01; char a02; char a03;
+//     char a10; char a11; char a12; char a13;
+//     char a20; char a21; char a22; char a23;
+//     char a30; char a31; char a32; char a33;
+// } typedef Matrix4_4_t, *pMatrix4_4;
 
-Matrix4_4_t crossbar(pMatrix4_4 A, pMatrix4_4 M, pMatrix4_4 out) {
+// Matrix4_4_t crossbar(pMatrix4_4 A, pMatrix4_4 M, pMatrix4_4 out) {
 
-    // Assuming we are being given the 
-    // elements of A, not A_transpose
+//     // Assuming we are being given the 
+//     // elements of A, not A_transpose
 
-    // Partial Products
-    Matrix4_4_t partial_prod;
+//     // Partial Products
+//     Matrix4_4_t partial_prod;
 
-    partial_prod.a00 = 
-        A->a00 * M->a00 +
-        A->a10 * M->a10 +
-        A->a20 * M->a20 +
-        A->a30 * M->a30;
+//     partial_prod.a00 = 
+//         A->a00 * M->a00 +
+//         A->a10 * M->a10 +
+//         A->a20 * M->a20 +
+//         A->a30 * M->a30;
     
-    partial_prod.a01 = 
-        A->a00 * M->a01 +
-        A->a10 * M->a11 +
-        A->a20 * M->a21 +
-        A->a30 * M->a31;
+//     partial_prod.a01 = 
+//         A->a00 * M->a01 +
+//         A->a10 * M->a11 +
+//         A->a20 * M->a21 +
+//         A->a30 * M->a31;
     
-    partial_prod.a02 = 
-        A->a00 * M->a02 +
-        A->a10 * M->a12 +
-        A->a20 * M->a22 +
-        A->a30 * M->a32;
+//     partial_prod.a02 = 
+//         A->a00 * M->a02 +
+//         A->a10 * M->a12 +
+//         A->a20 * M->a22 +
+//         A->a30 * M->a32;
     
-    partial_prod.a03 = 
-        A->a00 * M->a03 +
-        A->a10 * M->a13 +
-        A->a20 * M->a23 +
-        A->a30 * M->a33;
+//     partial_prod.a03 = 
+//         A->a00 * M->a03 +
+//         A->a10 * M->a13 +
+//         A->a20 * M->a23 +
+//         A->a30 * M->a33;
     
-    partial_prod.a10 = 
-        A->a01 * M->a00 +
-        A->a11 * M->a10 +
-        A->a21 * M->a20 +
-        A->a31 * M->a30;
+//     partial_prod.a10 = 
+//         A->a01 * M->a00 +
+//         A->a11 * M->a10 +
+//         A->a21 * M->a20 +
+//         A->a31 * M->a30;
 
-    partial_prod.a11 = 
-        A->a01 * M->a01 +
-        A->a11 * M->a11 +
-        A->a21 * M->a21 +
-        A->a31 * M->a31;
+//     partial_prod.a11 = 
+//         A->a01 * M->a01 +
+//         A->a11 * M->a11 +
+//         A->a21 * M->a21 +
+//         A->a31 * M->a31;
     
-    partial_prod.a12 = 
-        A->a01 * M->a02 +
-        A->a11 * M->a12 +
-        A->a21 * M->a22 +
-        A->a31 * M->a32;
+//     partial_prod.a12 = 
+//         A->a01 * M->a02 +
+//         A->a11 * M->a12 +
+//         A->a21 * M->a22 +
+//         A->a31 * M->a32;
     
-    partial_prod.a13 = 
-        A->a01 * M->a03 +
-        A->a11 * M->a13 +
-        A->a21 * M->a23 +
-        A->a31 * M->a33;
+//     partial_prod.a13 = 
+//         A->a01 * M->a03 +
+//         A->a11 * M->a13 +
+//         A->a21 * M->a23 +
+//         A->a31 * M->a33;
 
-    partial_prod.a20 = 
-        A->a02 * M->a00 +
-        A->a12 * M->a10 +
-        A->a22 * M->a20 +
-        A->a32 * M->a30;
+//     partial_prod.a20 = 
+//         A->a02 * M->a00 +
+//         A->a12 * M->a10 +
+//         A->a22 * M->a20 +
+//         A->a32 * M->a30;
     
-    partial_prod.a21 = 
-        A->a02 * M->a01 +
-        A->a12 * M->a11 +
-        A->a22 * M->a21 +
-        A->a32 * M->a31;
+//     partial_prod.a21 = 
+//         A->a02 * M->a01 +
+//         A->a12 * M->a11 +
+//         A->a22 * M->a21 +
+//         A->a32 * M->a31;
     
-    partial_prod.a22 = 
-        A->a02 * M->a02 +
-        A->a12 * M->a12 +
-        A->a22 * M->a22 +
-        A->a32 * M->a32;
+//     partial_prod.a22 = 
+//         A->a02 * M->a02 +
+//         A->a12 * M->a12 +
+//         A->a22 * M->a22 +
+//         A->a32 * M->a32;
 
-    partial_prod.a23 = 
-        A->a02 * M->a03 +
-        A->a12 * M->a13 +
-        A->a22 * M->a23 +
-        A->a32 * M->a33;
+//     partial_prod.a23 = 
+//         A->a02 * M->a03 +
+//         A->a12 * M->a13 +
+//         A->a22 * M->a23 +
+//         A->a32 * M->a33;
     
-    partial_prod.a30 = 
-        A->a03 * M->a00 +
-        A->a13 * M->a10 +
-        A->a23 * M->a20 +
-        A->a33 * M->a30;
+//     partial_prod.a30 = 
+//         A->a03 * M->a00 +
+//         A->a13 * M->a10 +
+//         A->a23 * M->a20 +
+//         A->a33 * M->a30;
     
-    partial_prod.a31 = 
-        A->a03 * M->a01 +
-        A->a13 * M->a11 +
-        A->a23 * M->a21 +
-        A->a33 * M->a31;
+//     partial_prod.a31 = 
+//         A->a03 * M->a01 +
+//         A->a13 * M->a11 +
+//         A->a23 * M->a21 +
+//         A->a33 * M->a31;
     
-    partial_prod.a32 = 
-        A->a03 * M->a02 +
-        A->a13 * M->a12 +
-        A->a23 * M->a22 +
-        A->a33 * M->a32;
+//     partial_prod.a32 = 
+//         A->a03 * M->a02 +
+//         A->a13 * M->a12 +
+//         A->a23 * M->a22 +
+//         A->a33 * M->a32;
 
-    partial_prod.a33 = 
-        A->a03 * M->a03 +
-        A->a13 * M->a13 +
-        A->a23 * M->a23 +
-        A->a33 * M->a33;
+//     partial_prod.a33 = 
+//         A->a03 * M->a03 +
+//         A->a13 * M->a13 +
+//         A->a23 * M->a23 +
+//         A->a33 * M->a33;
 
-    return partial_prod;
-}
+//     return partial_prod;
+// }
 
 // This just does matrix multiply, but it works 
 // for the simulation 
-void reconfig_crossbar(size_t n, char* input, char* weights, char* output) {
+void reconfig_crossbar(int n, int* input, int* weights, int* output) {
 
     // Note that this assumes an nxn matrix
-    char sum;
+    int sum;
 
     for (int row = 0; row < n; row++) {
         for (int col = 0; col < n; col++) {
@@ -170,4 +169,4 @@ void reconfig_crossbar(size_t n, char* input, char* weights, char* output) {
 
 //     printf("Value of result at a00 = %d\n", result.a00);
 //     printf("Value at a33 = %d\n", result.a33);
-}
+// }

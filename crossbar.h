@@ -1,1 +1,4 @@
-void reconfig_crossbar(size_t n, char* input, char* weights, char* output);
+#include <stdio.h>
+#include <stdlib.h>
+
+void reconfig_crossbar(int n, int* input, int* weights, int* output);
