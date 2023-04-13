@@ -24,8 +24,6 @@ static int memristor_calltf(PLI_BYTE8* user_data);
 #define B       (D * D) / UV
 #define K       R_ON / B
 
-#define MATRIX_SIZE     4
-
 /* Here we can make calls upon compiling in the verilog
 */
 static int memristor_compiletf(PLI_BYTE8* user_data) {
@@ -54,51 +52,52 @@ static int memristor_calltf(PLI_BYTE8* user_data) {
 
     argval.format = vpiIntVal;
     vpi_get_value(item, &argval);
-    argc = argval.value.integer;
+    int MATRIX_SIZE = argval.value.integer;
+    argc = MATRIX_SIZE * MATRIX_SIZE * 3;
     int outc = MATRIX_SIZE*MATRIX_SIZE;
 
     int* args = malloc(sizeof(int) * argc);
 
-    printf("HERE COME THE ARGSS\n");
+    //printf("HERE COME THE ARGSS\n");
 
     for (int i = 0; i < argc - outc; i++) {
         item = vpi_scan(argv);
         vpi_get_value(item, &argval);
         args[i] = argval.value.integer;
 
-        printf("new arg = %d\n", args[i]);
+        // printf("new arg = %d\n", args[i]);
         //free(argHandlePtr);
     }
 
     int* output = malloc(sizeof(int) * MATRIX_SIZE*MATRIX_SIZE);
 
-    reconfig_crossbar(MATRIX_SIZE, args, args, output);
+    reconfig_crossbar(MATRIX_SIZE, args, (args+(MATRIX_SIZE*MATRIX_SIZE)), output);
 
-    printf("A = \n\n");
-    for (int i = 0; i < MATRIX_SIZE; i++) {
-        for (int j = 0; j < MATRIX_SIZE; j++) {
-            printf("%d ", args[i*MATRIX_SIZE +j]);
-        }
-        printf("\n");
-    }
-    printf("\n");
+    // printf("A = \n\n");
+    // for (int i = 0; i < MATRIX_SIZE; i++) {
+    //     for (int j = 0; j < MATRIX_SIZE; j++) {
+    //         printf("%d ", args[i*MATRIX_SIZE +j]);
+    //     }
+    //     printf("\n");
+    // }
+    // printf("\n");
 
-    printf("W = \n\n");
-    for (int i = 0; i < MATRIX_SIZE; i++) {
-        for (int j = 0; j < MATRIX_SIZE; j++) {
-            printf("%d ", args[i*MATRIX_SIZE +j]);
-        }
-        printf("\n");
-    }
-    printf("\n");
+    // printf("W = \n\n");
+    // for (int i = 0; i < MATRIX_SIZE; i++) {
+    //     for (int j = 0; j < MATRIX_SIZE; j++) {
+    //         printf("%d ", args[i*MATRIX_SIZE +j]);
+    //     }
+    //     printf("\n");
+    // }
+    // printf("\n");
 
-    printf("OUTPUT\n\n");
-    for (int i = 0; i < MATRIX_SIZE; i++) {
-        for (int j = 0; j < MATRIX_SIZE; j++) {
-            printf("%d ", output[i*MATRIX_SIZE +j]);
-        }
-        printf("\n");
-    }
+    // printf("OUTPUT\n\n");
+    // for (int i = 0; i < MATRIX_SIZE; i++) {
+    //     for (int j = 0; j < MATRIX_SIZE; j++) {
+    //         printf("%d ", output[i*MATRIX_SIZE +j]);
+    //     }
+    //     printf("\n");
+    // }
 
     for (int i = 0; i < outc; i++) {
         item = vpi_scan(argv);
