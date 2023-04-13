@@ -36,6 +36,10 @@ module mem_matrix;
                     b[4], b[5], b[6], b[7],
                     b[8], b[9], b[10], b[11],
                     b[12], b[13], b[14], b[15]);
+        
+        for (i = 0; i < 16; i = i + 1) begin
+            $display("%d", b[i]);
+        end
 
         
     end

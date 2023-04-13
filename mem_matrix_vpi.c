@@ -101,7 +101,9 @@ static int memristor_calltf(PLI_BYTE8* user_data) {
     }
 
     for (int i = 0; i < outc; i++) {
-        
+        item = vpi_scan(argv);
+        out_value.value.integer = output[i];
+        vpi_put_value(item, &out_value, NULL, vpiNoDelay);
     }
 
     free(output);
