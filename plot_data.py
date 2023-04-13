@@ -20,7 +20,7 @@ with open("./NonlinearData.csv") as csvFile:
     print(x_vals)
     print(y_vals)
 
-    plt.plot(x_val_arr, y_val_arr, "k", label="w/ window func.")
+    plt.plot(x_val_arr, y_val_arr, "k", label="w/ window function")
 
 with open("./LinearData.csv") as csvFile:
     data = csvFile.read()
@@ -40,11 +40,13 @@ with open("./LinearData.csv") as csvFile:
     print(x_vals)
     print(y_vals)
 
-    plt.plot(x_val_arr, y_val_arr, "k--", label="w/out window func.")
+    plt.plot(x_val_arr, y_val_arr, "k--", label="w/out window function")
 
 plt.legend()
 plt.xlabel("Step")
 plt.ylabel("State")
+plt.title("Nonlinear Model With Window Function vs Without")
+#plt.axvline(500, color = 'k', linestyle = "-.")
 
 plt.show()
 

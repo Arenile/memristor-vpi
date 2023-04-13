@@ -1,0 +1,37 @@
+#! /usr/bin/vvp
+:ivl_version "11.0 (stable)" "(v11_0)";
+:ivl_delay_selection "TYPICAL";
+:vpi_time_precision + 0;
+:vpi_module "/usr/lib/ivl/system.vpi";
+:vpi_module "/usr/lib/ivl/vhdl_sys.vpi";
+:vpi_module "/usr/lib/ivl/vhdl_textio.vpi";
+:vpi_module "/usr/lib/ivl/v2005_math.vpi";
+:vpi_module "/usr/lib/ivl/va_math.vpi";
+S_0x562ebb0c34c0 .scope module, "mem_matrix" "mem_matrix" 2 1;
+ .timescale 0 0;
+v0x562ebb0c3b80_0 .var "a", 31 0;
+v0x562ebb0c3650_0 .var "b", 31 0;
+v0x562ebb0c4110_0 .var "c", 31 0;
+v0x562ebb0c3eb0_0 .var/real "correcting", 0 0;
+    .scope S_0x562ebb0c34c0;
+T_0 ;
+    %pushi/real 1073741824, 4080; load=16384.0
+    %store/real v0x562ebb0c3eb0_0;
+    %end;
+    .thread T_0;
+    .scope S_0x562ebb0c34c0;
+T_1 ;
+    %pushi/vec4 9, 0, 32;
+    %store/vec4 v0x562ebb0c3b80_0, 0, 32;
+    %pushi/vec4 3, 0, 32;
+    %store/vec4 v0x562ebb0c3650_0, 0, 32;
+    %pushi/vec4 8, 0, 32;
+    %store/vec4 v0x562ebb0c4110_0, 0, 32;
+    %vpi_call 2 17 "$crossbar", 32'sb00000000000000000000000000000011, v0x562ebb0c3b80_0, v0x562ebb0c3650_0, v0x562ebb0c4110_0 {0 0 0};
+    %end;
+    .thread T_1;
+# The file index is used to find the file name in the following table.
+:file_names 3;
+    "N/A";
+    "<interactive>";
+    "mem_matrix_mult.v";

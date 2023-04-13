@@ -1,0 +1,1 @@
+void reconfig_crossbar(size_t n, char* input, char* weights, char* output);

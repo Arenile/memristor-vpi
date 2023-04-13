@@ -133,41 +133,41 @@ void reconfig_crossbar(size_t n, char* input, char* weights, char* output) {
     }
 }
 
-int main() {
-    Matrix4_4_t input;
-    Matrix4_4_t weights;
+// int main() {
+//     Matrix4_4_t input;
+//     Matrix4_4_t weights;
 
-    input.a00 = 1; input.a01 = 2; input.a02 = 3; input.a03 = 4;
-    input.a10 = 1; input.a11 = 2; input.a12 = 3; input.a13 = 4;
-    input.a20 = 1; input.a21 = 2; input.a22 = 3; input.a23 = 4;
-    input.a30 = 1; input.a31 = 2; input.a32 = 3; input.a33 = 4;
+//     input.a00 = 1; input.a01 = 2; input.a02 = 3; input.a03 = 4;
+//     input.a10 = 1; input.a11 = 2; input.a12 = 3; input.a13 = 4;
+//     input.a20 = 1; input.a21 = 2; input.a22 = 3; input.a23 = 4;
+//     input.a30 = 1; input.a31 = 2; input.a32 = 3; input.a33 = 4;
 
-    weights.a00 = 1; weights.a01 = 2; weights.a02 = 3; weights.a03 = 4;
-    weights.a10 = 1; weights.a11 = 2; weights.a12 = 3; weights.a13 = 4;
-    weights.a20 = 1; weights.a21 = 2; weights.a22 = 3; weights.a23 = 4;
-    weights.a30 = 1; weights.a31 = 2; weights.a32 = 3; weights.a33 = 4;
+//     weights.a00 = 1; weights.a01 = 2; weights.a02 = 3; weights.a03 = 4;
+//     weights.a10 = 1; weights.a11 = 2; weights.a12 = 3; weights.a13 = 4;
+//     weights.a20 = 1; weights.a21 = 2; weights.a22 = 3; weights.a23 = 4;
+//     weights.a30 = 1; weights.a31 = 2; weights.a32 = 3; weights.a33 = 4;
 
-    char* A = malloc(sizeof(char)*16);
-    char* W = malloc(sizeof(char)*16);
-    char* output = malloc(sizeof(char)*16);
+//     char* A = malloc(sizeof(char)*16);
+//     char* W = malloc(sizeof(char)*16);
+//     char* output = malloc(sizeof(char)*16);
 
-    for (int i = 0; i < 16; i++) {
-        A[i] = i;
-        W[i] = 1;
-    }
+//     for (int i = 0; i < 16; i++) {
+//         A[i] = i;
+//         W[i] = 1;
+//     }
 
-    reconfig_crossbar(4, A, W, output);
+//     reconfig_crossbar(4, A, W, output);
 
-    printf("OUTPUT = \n");
-    for (int i = 0; i < 4; i++) {
-        for (int j = 0; j < 4; j++) {
-            printf("%d ", output[i*4+j]);
-        }
-        printf("\n");
-    }
+//     printf("OUTPUT = \n");
+//     for (int i = 0; i < 4; i++) {
+//         for (int j = 0; j < 4; j++) {
+//             printf("%d ", output[i*4+j]);
+//         }
+//         printf("\n");
+//     }
 
-    Matrix4_4_t result = crossbar(&input, &weights, NULL);
+//     Matrix4_4_t result = crossbar(&input, &weights, NULL);
 
-    printf("Value of result at a00 = %d\n", result.a00);
-    printf("Value at a33 = %d\n", result.a33);
+//     printf("Value of result at a00 = %d\n", result.a00);
+//     printf("Value at a33 = %d\n", result.a33);
 }
