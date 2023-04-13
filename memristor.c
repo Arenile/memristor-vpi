@@ -1,7 +1,8 @@
-#include <vpi_user.h>
+#include <iverilog/vpi_user.h>
 #include <stdlib.h>
 
 #include <stdlib.h>
+#include "nonlinear.h"
 
 // Function prototypes
 void memristor_register(void);
@@ -56,42 +57,44 @@ static int memristor_calltf(PLI_BYTE8* user_data) {
 
     vpiHandle callh = vpi_handle(vpiSysTfCall, 0);
     vpiHandle argv = vpi_iterate(vpiArgument, callh);
-    vpiHandle argc_vpi;
+    vpiHandle item;
+    vpiHandle item1;
+    vpiHandle out;
 
-    argc_vpi = vpi_scan(argv);
+    item = vpi_scan(argv);
+    item1 = vpi_scan(argv);
+    out = vpi_scan(argv);
     struct t_vpi_value argval;
-    PLI_INT32 argc;
+    int value;
+    int value1;
     struct t_vpi_value out_value;
     out_value.format = vpiIntVal;
 
-    vpiHandle item1;
-    vpiHandle out;
-    //out_value.value.integer = 10;
-
     argval.format = vpiIntVal;
-    vpi_get_value(argc_vpi, &argval);
-    argc = argval.value.integer;
-
-    // for (size_t i = 0; i < argc; i++) {
-    //     vpiHandle arg_vpi = vpi_scan(argv);
-    //     vpi_get_value(arg_vpi, &argval);
-    //     args[i] = argval.value.integer;
-
-    //     printf("%d", args[i]);
-    // }
-    // printf("\n");
-
-    int value = argval.value.misc;
-    argval.format = vpiIntVal;
+    vpi_get_value(item, &argval);
+    value = argval.value.integer;
     vpi_get_value(item1, &argval);
-    int value1 = argval.value.integer;
+    value1 = argval.value.integer;
+    vpi_get_value(out, &argval);
+    int og_state = argval.value.integer;
+
+    printf("og_state = %d\n", og_state);
+
+    double fixed_state = (double)og_state / (INT16_MAX/2);
+
+    double new_state = nonlinear((double)value, (double)value1, 0.05, fixed_state);
+
+    // printf("new_state = %lf\n", new_state);
+
+    out_value.value.integer = (INT16_MAX/2) * new_state;
+
+    printf("new state should be = %d\n", out_value.value.integer);
+
     vpi_put_value(out, &out_value, NULL, vpiNoDelay);
 
-    out_value.value.integer = nonlinear(value, value1);
-
-    vpi_printf("HELLO VERILOG!\n");
-    vpi_printf("RECEIVED = %i\n", argc);
-    //vpi_printf("RECEIVED ALSO = %i\n", value1);
+    vpi_printf("STATE\n");
+    // vpi_printf("RECEIVED = %i\n", value);
+    // vpi_printf("RECEIVED ALSO = %i\n", value1);
     return 1;
 }
 
@@ -112,15 +115,3 @@ void (*vlog_startup_routines[])(void) = {
     memristor_register, 
     0
 };
-
-void nonlinear(float vDec, float vInc) {
-    double t0 = 0;
-    float X0 = 0.076; // init state var
-
-    int nsteps = 1000; // may redefine this
-    
-    double T = 0.2;
-
-    double dt = (double)T / nsteps;
-
-}

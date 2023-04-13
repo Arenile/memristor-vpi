@@ -1,17 +1,22 @@
 module memristor;
-    reg[7:0] a [3:0];
-    reg[7:0] b;
-    reg[7:0] c;
+    reg[31:0] a;
+    reg[31:0] b;
+    reg[31:0] c;
+
+    integer i;
 
     initial begin
-        a[0] = 8;
-        a[1] = 1;
-        a[2] = 0;
-        b = 2;
-        $memristor(1, 5);
-        $display(c);
+         a = 0;
+         b = 3;
+         c = 0;
+        // b = 2;
+        // $memristor(1, 5);
+        // $display(c);
+        for (i = 0; i < 100; i = i + 1) begin
+            $display(c);
+            $memristor(a, b, c);
+            $display(c);
+        end
     end
 
 endmodule
-
-(*blackbox*)
