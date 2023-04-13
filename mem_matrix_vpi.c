@@ -55,12 +55,13 @@ static int memristor_calltf(PLI_BYTE8* user_data) {
     argval.format = vpiIntVal;
     vpi_get_value(item, &argval);
     argc = argval.value.integer;
+    int outc = MATRIX_SIZE*MATRIX_SIZE;
 
     int* args = malloc(sizeof(int) * argc);
 
     printf("HERE COME THE ARGSS\n");
 
-    for (int i = 0; i < argc; i++) {
+    for (int i = 0; i < argc - outc; i++) {
         item = vpi_scan(argv);
         vpi_get_value(item, &argval);
         args[i] = argval.value.integer;
@@ -73,6 +74,24 @@ static int memristor_calltf(PLI_BYTE8* user_data) {
 
     reconfig_crossbar(MATRIX_SIZE, args, args, output);
 
+    printf("A = \n\n");
+    for (int i = 0; i < MATRIX_SIZE; i++) {
+        for (int j = 0; j < MATRIX_SIZE; j++) {
+            printf("%d ", args[i*MATRIX_SIZE +j]);
+        }
+        printf("\n");
+    }
+    printf("\n");
+
+    printf("W = \n\n");
+    for (int i = 0; i < MATRIX_SIZE; i++) {
+        for (int j = 0; j < MATRIX_SIZE; j++) {
+            printf("%d ", args[i*MATRIX_SIZE +j]);
+        }
+        printf("\n");
+    }
+    printf("\n");
+
     printf("OUTPUT\n\n");
     for (int i = 0; i < MATRIX_SIZE; i++) {
         for (int j = 0; j < MATRIX_SIZE; j++) {
@@ -81,21 +100,11 @@ static int memristor_calltf(PLI_BYTE8* user_data) {
         printf("\n");
     }
 
+    for (int i = 0; i < outc; i++) {
+        
+    }
+
     free(output);
-
-    // vpi_get_value(item1, &argval);
-    // value1 = argval.value.integer;
-    // vpi_get_value(out, &argval);
-    // int og_state = argval.value.integer;
-
-
-    // printf("og_state = %d\n", og_state);
-
-    // double fixed_state = (double)og_state / (INT16_MAX/2);
-
-    // //double new_state = nonlinear((double)value, (double)value1, 0.05, fixed_state);
-
-    // // printf("new_state = %lf\n", new_state);
 
     // out_value.value.integer = (INT16_MAX/2) * new_state;
 
