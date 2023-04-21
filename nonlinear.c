@@ -5,7 +5,7 @@
 #include "nonlinear.h"
 
 // DEVICE LENGTH
-#define D       1E-09
+#define D       1E-9
 
 // MOBILITY OF IONS
 #define UV      1E-14 
@@ -23,9 +23,7 @@ double R_ON = 1E2;
 #define K       (UV * R_ON)/(D*D) 
 
 
-double nonlinear(double vDec, double vInc, double dt, double prev_state) {
-
-    printf("IN NONLINEAR!\n");
+double nonlinear(double vDec, double vInc, double dt, double prev_state, double* real_out_voltage) {
 
     double vIn = vInc - vDec;
     double M = ((R_OFF * prev_state) + (R_ON * (1 - prev_state)));
@@ -35,11 +33,6 @@ double nonlinear(double vDec, double vInc, double dt, double prev_state) {
     // Need window functin for nonlinear behavior
     double window = (1 - pow((2*(prev_state+0.0001) - 1), (2*P)));
     double change = K*(i*dt)*window;
-
-    printf("CHANGE = %f\n", change);
-    printf("i = %f\n", i);
-    printf("K = %f\n", K);
-    printf("window = %f\n", window);
 
     if (fabs(i) < THRESHOLD) {
         printf("NO CHANGE\n");
@@ -68,20 +61,14 @@ double nonlinear(double vDec, double vInc, double dt, double prev_state) {
             M = R_OFF;
         }
 
-        printf("IN i < 0\n");
-
-        printf("M = %f\n", M);
-
-        double sanity_check = (double)(M - R_ON) / (double)(R_OFF - R_ON);
-
-        printf("sanity_check = %f\n", sanity_check);
-
         new_state = (double)(M - R_ON) / (double)(R_OFF - R_ON);
 
-        printf("new_state = %f\n", new_state);
     }
 
-    printf("new_state in nonlin = %f\n", new_state);
+    printf("i = %f\n", i);
+    printf("M = %f\n", M);
+
+    *real_out_voltage = (vIn/M) * M;
 
     return new_state;
 
